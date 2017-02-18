@@ -1,11 +1,11 @@
 # Site settings
-title: 'Raphael Thomas'
-description: 'engineer, nerd, officer, dancer, bookworm, crossfitter'
+title: 'Raphael Thomas Seebacher'
+description: 'engineer | nerd | officer | dancer | bookworm | crossfitter'
 # google_analytics: 'UA-XXXXXX-X'
 # disqus_shortname: 'your-disqus-name'
 
 author:
-  name: 'Raphael Thomas'
+  name: 'Raphael Thomas Seebacher'
   email:
   twitter_username: _raphaelthomas
   facebook_username: raphael.seebacher
@@ -34,4 +34,4 @@ kramdown:
   hard_wrap: false
 
 gems: ['jekyll-paginate']
-exclude: ['Gemfile', 'Gemfile.lock', 'screenshot.png']
+exclude: ['Gemfile', 'Gemfile.lock']

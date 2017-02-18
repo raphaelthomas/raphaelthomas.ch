@@ -3,6 +3,7 @@ title: 'Raphael Thomas Seebacher'
 description: 'engineer | nerd | officer | dancer | bookworm | crossfitter'
 # google_analytics: 'UA-XXXXXX-X'
 # disqus_shortname: 'your-disqus-name'
+active: false
 
 author:
   name: 'Raphael Thomas Seebacher'

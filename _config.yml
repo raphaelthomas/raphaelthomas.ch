@@ -1,6 +1,6 @@
 # Site settings
 title: 'Raphael Thomas Seebacher'
-description: 'engineer | nerd | officer | dancer | bookworm | crossfitter'
+description: 'engineer middot; nerd middot; officer middot; dancer middot; bookworm middot; crossfitter'
 # google_analytics: 'UA-XXXXXX-X'
 # disqus_shortname: 'your-disqus-name'
 active: true
@@ -23,7 +23,7 @@ defaults:
   -
     scope:
       path: ''
-      type: 'pages'
+      type: 'page'
     values:
       layout: 'page'
 
@@ -41,4 +41,4 @@ kramdown:
   hard_wrap: false
 
 gems: ['jekyll-paginate']
-exclude: ['Gemfile', 'Gemfile.lock']
+exclude: ['Gemfile', 'Gemfile.lock', 'LICENSE']

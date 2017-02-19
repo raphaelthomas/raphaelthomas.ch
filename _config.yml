@@ -22,7 +22,7 @@ defaults:
         layout: 'post'
   -
     scope:
-      path: '_pages'
+      path: ''
       type: 'pages'
     values:
       layout: 'page'

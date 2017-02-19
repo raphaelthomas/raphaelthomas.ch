@@ -20,6 +20,12 @@ defaults:
       type: 'posts'
     values:
         layout: 'post'
+  -
+    scope:
+      path: '_pages'
+      type: 'pages'
+    values:
+      layout: 'page'
 
 # Build settings
 destination: _site

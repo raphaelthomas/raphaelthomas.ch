@@ -94,6 +94,8 @@
 
       </div>
 
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="//d3js.org/topojson.v1.min.js"></script>
 <script>
 var width = 250,
     height = 250;
@@ -109,7 +111,7 @@ var path = d3.geo.path()
 
 var graticule = d3.geo.graticule();
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("div#map").append("svg")
     .attr("width", width)
     .attr("height", height);
 
@@ -146,6 +148,7 @@ d3.json("/data/countries.json", function(error, world) {
 d3.select(self.frameElement).style("height", height + "px");
 
 </script>
+    <div id="map" class="panel-main--map"></div>
 
     </div>
 

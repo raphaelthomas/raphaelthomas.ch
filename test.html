@@ -18,18 +18,19 @@ body {
 
 .graticule {
   fill: none;
-  stroke: #777;
+  stroke: red;
   stroke-width: .5px;
   stroke-opacity: .5;
 }
 
 .land {
-  fill: rgba(255,255,255,0.5);
+    /* fill: rgba(255,255,255,0.5); */
+    fill: yellow;
 }
 
 .boundary {
   fill: none;
-  stroke: #fff;
+  stroke: green;
   stroke-width: .5px;
 }
 
@@ -63,7 +64,7 @@ svg.append("defs").append("path")
     .attr("d", path);
 
 svg.append("use")
-    .attr("class", "stroke")
+//    .attr("class", "stroke")
     .attr("xlink:href", "#sphere");
 
 svg.append("use")

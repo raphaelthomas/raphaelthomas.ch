@@ -18,7 +18,7 @@ body {
 
 .graticule {
   fill: none;
-  stroke: red;
+  stroke: #ffffff;
   stroke-width: .5px;
   stroke-opacity: .5;
 }
@@ -64,7 +64,7 @@ svg.append("defs").append("path")
     .attr("d", path);
 
 svg.append("use")
-//    .attr("class", "stroke")
+    .attr("class", "stroke")
     .attr("xlink:href", "#sphere");
 
 svg.append("use")

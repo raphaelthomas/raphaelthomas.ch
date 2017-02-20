@@ -78,6 +78,14 @@ svg.append("path")
 d3.json("/data/countries.json", function(error, world) {
   if (error) throw error;
 
+  var countries = topojson.feature(world, world.objects.countries).features
+
+  svg.selectAll(".country")
+      .data(countries)
+      .enter().insert("path", ".graticule")
+      .attr("class", function(d) { return "country " + "code" + d.id; })
+      .attr("d", path);
+/*
   svg.insert("path", ".graticule")
       .datum(topojson.feature(world, world.objects.land))
       .attr("class", "land")
@@ -87,6 +95,7 @@ d3.json("/data/countries.json", function(error, world) {
       .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
       .attr("class", "boundary")
       .attr("d", path);
+*/
 });
 
 d3.select(self.frameElement).style("height", height + "px");

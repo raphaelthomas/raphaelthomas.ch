@@ -20,7 +20,7 @@ body {
   fill: none;
   stroke: #ffffff;
   stroke-width: 0.5px;
-  stroke-opacity: 1;
+  stroke-opacity: 0.5;
 }
 
 .land {
@@ -83,7 +83,7 @@ d3.json("/data/countries.json", function(error, world) {
   svg.selectAll(".country")
       .data(countries)
       .enter().insert("path", ".graticule")
-      .attr("class", function(d) { return "country " + "code" + d.id; })
+      .attr("class", "land")
       .attr("d", path);
 });
 

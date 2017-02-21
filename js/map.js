@@ -4,14 +4,13 @@ var width = 250,
 var svg = d3.select("div#map").append("svg")
     .attr("width", width)
     .attr("height", height);
+var projection = d3.geo.orthographic()
+    .scale(125)
+    .translate([width / 2, height / 2])
+    .clipAngle(90)
+    .precision(.1);
 
 d3.json("/data/location.json", function(error, data) {
-    var projection = d3.geo.orthographic()
-        .scale(125)
-        .translate([width / 2, height / 2])
-        .clipAngle(90)
-        .precision(.1);
-
     projection.rotate([-data.coordinates[0], -data.coordinates[1], 0]);
 
     var path = d3.geo.path().projection(projection);

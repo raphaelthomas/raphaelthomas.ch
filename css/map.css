@@ -4,7 +4,7 @@ div#map {
 
 div#location-description {
     font-size: 12px;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
 }
 
 .stroke {
@@ -61,4 +61,26 @@ div#location-description {
     fill: none;
     -webkit-transform-origin: center;
     -webkit-animation: pulseLocation 4s linear 1s infinite;
+}
+
+.typed-cursor{
+    opacity: 1;
+    -webkit-animation: blink 0.7s infinite;
+    -moz-animation: blink 0.7s infinite;
+    animation: blink 0.7s infinite;
+}
+@keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-webkit-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-moz-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
 }

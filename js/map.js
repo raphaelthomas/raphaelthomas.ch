@@ -66,4 +66,6 @@ d3.json("/data/location.json", function(error, data) {
             },
         });
     });
+
+    console.log($(".location"));
 });

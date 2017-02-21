@@ -116,7 +116,7 @@ var projection = d3.geo.orthographic()
 var lat = 33.88767,
     lon = 151.23700;
 
-projection.rotate([lat, lon, 0]);
+projection.rotate([-151.23700, 33.88767, 0]);
 
 var path = d3.geo.path()
     .projection(projection);

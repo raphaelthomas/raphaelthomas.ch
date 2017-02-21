@@ -41,7 +41,10 @@ div#location-description {
     75% {
         opacity: 0;
         r: 20px;
+        stroke: #EF0623;
+/*
         stroke: #ffffff;
+*/
         stroke-width: 0.25px;
     }
     100% {

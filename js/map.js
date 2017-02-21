@@ -8,22 +8,19 @@ var svg = d3.select("div#map").append("svg")
 d3.json("/data/location.json", function(error, data) {
     console.log(data);
 
-    var lat = -33.88767,
-        lon = 151.23700;
-
     var projection = d3.geo.orthographic()
         .scale(125)
         .translate([width / 2, height / 2])
         .clipAngle(90)
         .precision(.1);
 
+    var lat = -33.88767,
+        lon = 151.23700;
+
     projection.rotate([-lon, -lat, 0]);
 
-    var path = d3.geo.path()
-        .projection(projection);
-
+    var path = d3.geo.path().projection(projection);
     var graticule = d3.geo.graticule();
-
 
     svg.append("defs").append("path")
         .datum({type: "Sphere"})

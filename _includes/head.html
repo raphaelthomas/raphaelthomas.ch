@@ -64,6 +64,7 @@ div#map {
     }
     50% {
         fill: red;
+        opacity: 1;
     }
     to {
         opacity: 0;
@@ -73,8 +74,8 @@ div#map {
 
 .location {
     fill: rgba(255,255,255,0.75);
-    -webkit-transform-origin: center;
-    -webkit-animation: pulseLocation 2s 1s infinite;
+    /* -webkit-transform-origin: center; */
+    -webkit-animation: pulseLocation 2s linear 1s infinite;
 }
 </style>
 </head>

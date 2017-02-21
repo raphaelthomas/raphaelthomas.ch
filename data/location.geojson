@@ -1,0 +1,11 @@
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [151.237, -33.88767]
+  },
+  "properties": {
+    "call": "HB9ESX"
+    "location": "Sydney NSW, Australia"
+  }
+}

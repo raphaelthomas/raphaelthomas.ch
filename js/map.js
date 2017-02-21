@@ -56,16 +56,14 @@ d3.json("/data/location.json", function(error, data) {
 
     d3.select(self.frameElement).style("height", height + "px");
 
-    $( function() {
+    $(".location:first").one("click", function() {
         $("#typed").typed({
             strings: ["Last time seen " + data.time + " somewhere in " + data.location + "..."],
             typeSpeed: 30,
-            startDelay: 2500,
+            startDelay: 0,
             callback: function() {
                 $(".typed-cursor").remove();
             },
         });
     });
-
-    console.log($(".location"));
 });

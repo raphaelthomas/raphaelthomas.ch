@@ -65,9 +65,9 @@ div#location-description {
 
 .typed-cursor{
     opacity: 1;
-    -webkit-animation: blink 0.7s infinite;
-    -moz-animation: blink 0.7s infinite;
-    animation: blink 0.7s infinite;
+    -webkit-animation: blink 1s infinite;
+    -moz-animation: blink 1s infinite;
+    animation: blink 1s infinite;
 }
 @keyframes blink{
     0% { opacity:1; }

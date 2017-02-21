@@ -2,6 +2,7 @@ var width = 250,
     height = 250;
 
 var svg = d3.select("div#map").append("svg")
+    .attr("id", "map-globe")
     .attr("width", width)
     .attr("height", height);
 var projection = d3.geo.orthographic()
@@ -56,7 +57,7 @@ d3.json("/data/location.json", function(error, data) {
 
     d3.select(self.frameElement).style("height", height + "px");
 
-    $(".location:first").one("click", function() {
+    $("#map-globe").one("click", function() {
         $("#typed").typed({
             strings: ["Last time seen " + data.time + " somewhere in " + data.location + "..."],
             typeSpeed: 30,

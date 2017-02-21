@@ -55,18 +55,4 @@ d3.json("/data/location.json", function(error, data) {
     });
 
     d3.select(self.frameElement).style("height", height + "px");
-
-    // zoom and pan
-    var zoom = d3.behavior.zoom()
-        .on("zoom",function() {
-            svg.attr("transform","translate("+ 
-                d3.event.translate.join(",")+")scale("+d3.event.scale+")");
-            svg.selectAll("circle")
-                .attr("d", path.projection(projection));
-            svg.selectAll("path")  
-                .attr("d", path.projection(projection)); 
-
-      });
-
-    svg.call(zoom)
 });

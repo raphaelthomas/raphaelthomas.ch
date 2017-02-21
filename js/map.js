@@ -55,4 +55,12 @@ d3.json("/data/location.json", function(error, data) {
     });
 
     d3.select(self.frameElement).style("height", height + "px");
+
+    $( function() {
+        $("#location-description").typed({
+            strings: ["Last time seen " + data.time + " in " + data.location],
+            typeSpeed: 0,
+            startDelay: 2,
+        });
+    });
 });

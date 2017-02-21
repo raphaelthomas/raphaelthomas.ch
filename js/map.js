@@ -59,8 +59,8 @@ d3.json("/data/location.json", function(error, data) {
 
     $("#map-globe").one("click", function() {
         $("#typed").typed({
-            strings: ["Last time seen " + data.time + " somewhere in " + data.location + "..."],
-            typeSpeed: 30,
+            strings: ["Last time seen ^500" + data.time + "^500 somewhere in ^500" + data.location + "..."],
+            typeSpeed: 40,
             startDelay: 0,
             callback: function() {
                 $(".typed-cursor").remove();

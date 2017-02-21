@@ -58,9 +58,9 @@ d3.json("/data/location.json", function(error, data) {
 
     $( function() {
         $("#location-description").typed({
-            strings: ["Last time seen " + data.time + " in " + data.location],
-            typeSpeed: 0,
-            startDelay: 2,
+            strings: ["Last time seen " + data.time + " somewhere in " + data.location],
+            typeSpeed: 1,
+            startDelay: 3,
         });
     });
 });

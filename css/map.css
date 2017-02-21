@@ -37,7 +37,7 @@ div#map {
         opacity: 0;
         r: 20px;
         stroke: #ffffff;
-        stroke-width: 0.5px;
+        stroke-width: 0.25px;
     }
     100% {
         opacity: 0;

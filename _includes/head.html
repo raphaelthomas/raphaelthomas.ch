@@ -56,5 +56,27 @@ div#map {
     stroke-width: 0.5px;
     stroke-opacity: 0.3;
 }
+
+@-webkit-keyframes pulse {
+    0% { 
+        opacity: 0;
+        -webkit-transform : scale(1);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: scale(5)
+    }
+}
+
+.location {
+    fill: rgba(255,255,255,0.75);
+    -webkit-transform-origin: center;
+    -webkit-animation: pulse 2s 1s infinite;
+}
 </style>
 </head>

@@ -14,10 +14,7 @@ d3.json("/data/location.json", function(error, data) {
         .clipAngle(90)
         .precision(.1);
 
-    var lat = -33.88767,
-        lon = 151.23700;
-
-    projection.rotate([-lon, -lat, 0]);
+    projection.rotate([-data.coordinates[0], -data.coordinates[1], 0]);
 
     var path = d3.geo.path().projection(projection);
     var graticule = d3.geo.graticule();
@@ -41,7 +38,7 @@ d3.json("/data/location.json", function(error, data) {
         .attr("d", path);
 
     svg.selectAll("circle")
-        .data([[lon, lat]]).enter()
+        .data([data.coordinates]).enter()
         .append("circle")
         .attr("cx", function (d) { return projection(d)[0]; })
         .attr("cy", function (d) { return projection(d)[1]; })

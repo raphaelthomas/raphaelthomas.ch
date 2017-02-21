@@ -57,8 +57,8 @@ d3.json("/data/location.json", function(error, data) {
     d3.select(self.frameElement).style("height", height + "px");
 
     $( function() {
-        $("#location-description").typed({
-            strings: ["Last time seen " + data.time + " somewhere in " + data.location],
+        $("#typed").typed({
+            strings: ["Last time seen " + data.time + " somewhere in " + data.location + "..."],
             typeSpeed: 1,
             startDelay: 3,
         });

@@ -2,6 +2,11 @@ div#map {
     margin: 25px 0;
 }
 
+div#location-description {
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+
 .stroke {
     fill: none;
     stroke: none;

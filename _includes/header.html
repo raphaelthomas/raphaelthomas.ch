@@ -113,10 +113,10 @@ var projection = d3.geo.orthographic()
     .clipAngle(90)
     .precision(.1);
 
-var lat = 33.88767,
+var lat = -33.88767,
     lon = 151.23700;
 
-projection.rotate([-151.23700, 33.88767, 0]);
+projection.rotate([-lon, -lat, 0]);
 
 var path = d3.geo.path()
     .projection(projection);

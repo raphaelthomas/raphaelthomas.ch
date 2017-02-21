@@ -6,8 +6,6 @@ var svg = d3.select("div#map").append("svg")
     .attr("height", height);
 
 d3.json("/data/location.json", function(error, data) {
-    console.log(data);
-
     var projection = d3.geo.orthographic()
         .scale(125)
         .translate([width / 2, height / 2])

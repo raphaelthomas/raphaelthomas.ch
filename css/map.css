@@ -33,7 +33,7 @@ div#map {
         stroke: #EF0623;
         stroke-width: 1px;
     }
-    50% {
+    75% {
         opacity: 0;
         r: 20px;
         stroke: #ffffff;

@@ -58,9 +58,12 @@ d3.json("/data/location.json", function(error, data) {
 
     $( function() {
         $("#typed").typed({
-            strings: ["Last time seen " + data.time + " somewhere in " + data.location + "... "],
+            strings: ["Last time seen " + data.time + " somewhere in " + data.location + "..."],
             typeSpeed: 30,
             startDelay: 2500,
+            callback: function() {
+                $(".typed-cursor").remove();
+            },
         });
     });
 });

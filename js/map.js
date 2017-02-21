@@ -60,7 +60,7 @@ d3.json("/data/location.json", function(error, data) {
         $("#typed").typed({
             strings: ["Last time seen " + data.time + " somewhere in " + data.location + "..."],
             typeSpeed: 0,
-            startDelay: 100,
+            startDelay: 1000,
         });
     });
 });

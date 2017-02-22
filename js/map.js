@@ -58,12 +58,12 @@ d3.json("/data/location.json", function(error, data) {
     d3.select(self.frameElement).style("height", height + "px");
 
     $("#map-globe").one("click", function() {
-        $("#typed").typed({
+        $("#typed-text").typed({
             strings: ["^2500Last time seen^1000 " + data.time + "^500 somewhere in ^1000" + data.location + "...^500"],
             typeSpeed: 50,
             startDelay: 0,
             callback: function() {
-                $("#location-description span").delay(1000).fadeOut(5000);
+                $("#location-description typed").delay(1000).fadeOut(5000);
             },
         });
     });

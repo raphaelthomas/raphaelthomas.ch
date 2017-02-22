@@ -1,12 +1,12 @@
 div#map {
-    margin: 25px 0;
+    margin: 50px 0;
     min-height: 255px;
 }
 
 div#location-description {
     min-height: 12px;
     font-size: 12px;
-    margin-bottom: 25px;
+    margin-top: -20px;
 }
 
 .stroke {
@@ -74,18 +74,9 @@ div#location-description {
     -moz-animation: blink 1s infinite;
     animation: blink 1s infinite;
 }
-@keyframes blink{
-    0% { opacity:1; }
-    50% { opacity:0; }
-    100% { opacity:1; }
-}
-@-webkit-keyframes blink{
-    0% { opacity:1; }
-    50% { opacity:0; }
-    100% { opacity:1; }
-}
-@-moz-keyframes blink{
-    0% { opacity:1; }
-    50% { opacity:0; }
+
+@-webkit-keyframes blink {
+    0%   { opacity:1; }
+    50%  { opacity:0; }
     100% { opacity:1; }
 }

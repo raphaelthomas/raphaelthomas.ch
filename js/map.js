@@ -63,7 +63,7 @@ d3.json("/data/location.json", function(error, data) {
             typeSpeed: 50,
             startDelay: 0,
             callback: function() {
-                $("#location-description").delay(1000).fadeOut(5000);
+                $("#location-description span").delay(1000).fadeOut(5000);
             },
         });
     });

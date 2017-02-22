@@ -6,7 +6,7 @@ div#map {
 div#location-description {
     min-height: 12px;
     font-size: 12px;
-    margin-top: 25px;
+    margin-top: -25px;
 }
 
 .stroke {

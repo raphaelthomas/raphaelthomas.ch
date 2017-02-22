@@ -1,7 +1,7 @@
 var width = 250,
     height = 250;
 
-var svg = d3.select("div#map").append("svg")
+var svg = d3.select("div#map").prepend("svg")
     .attr("id", "map-globe")
     .attr("width", width)
     .attr("height", height);

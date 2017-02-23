@@ -1588,6 +1588,9 @@ input[type="tel"] {
         .panel-title {
                 font-size: 1.5em; }
 
+	.panel-subtitle {
+		font-size: .9em; }
+
 	.panel-cover--collapsed {
 		width: 100%;
 		max-width: none; }

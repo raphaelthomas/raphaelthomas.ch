@@ -61,10 +61,10 @@ d3.json("/data/location.json", function(error, data) {
         $("#typed-text").typed({
             strings: ["^2500Last time seen^1000 " + data.time + "^500 somewhere in ^1000" + data.location + "...^500"],
             typeSpeed: 50,
-            startDelay: 0,
+            startDelay: 1000,
             callback: function() {
                 $("#location-description #typed").delay(1000).fadeOut(5000);
             },
-        });
+        }).fadeIn(1000);
     });
 });

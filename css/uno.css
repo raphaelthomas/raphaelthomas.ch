@@ -1589,6 +1589,9 @@ input[type="tel"] {
                 font-size: 1.5em; }
 
 	.panel-subtitle {
+		font-size: .9em; }
+
+	.panel-cover__description {
 		font-size: .75em; }
 
 	.panel-cover--collapsed {
@@ -1681,6 +1684,9 @@ input[type="tel"] {
 		font-size: 1.5em; }
 
 	.panel-subtitle {
+		font-size: .9em; }
+
+	.panel-cover__description {
 		font-size: .75em; }
 
 	.btn, .navigation__item a {

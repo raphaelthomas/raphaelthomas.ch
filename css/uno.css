@@ -1585,6 +1585,9 @@ input[type="tel"] {
 		display: table;
 		position: relative; }
 
+        .panel-title {
+                font-size: 1.5em; }
+
 	.panel-cover--collapsed {
 		width: 100%;
 		max-width: none; }
@@ -1672,7 +1675,7 @@ input[type="tel"] {
 
 	.panel-title {
 		margin-bottom: .1em;
-		font-size: 1.2em; }
+		font-size: 1.5em; }
 
 	.panel-subtitle {
 		font-size: .9em; }

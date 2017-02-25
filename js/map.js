@@ -59,7 +59,7 @@ d3.json("/data/location.json", function(error, data) {
 
     $("#map-globe").one("click", function() {
         $("#typed-text").typed({
-            strings: ["^2500Last time seen^1000 " + jQuery.timeago(new Date(data.time * 1000)) + "^500 somewhere in ^1000" + data.location],
+            strings: ["^2500Last time seen^1000 " + jQuery.timeago(new Date(data.time * 1000)) + (data.location ? "^500 somewhere in ^1000" + data.location : '')],
             typeSpeed: 50,
             startDelay: 1000,
             callback: function() {

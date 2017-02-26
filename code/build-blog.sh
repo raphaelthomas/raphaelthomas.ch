@@ -4,6 +4,7 @@ PROD_DIR="/var/www/ch.raphaelthomas"
 DEV_DIR="/var/www/ch.raphaelthomas.dev"
 COMMIT_LOG="$REPO_DIR/_includes/commit"
 GIT="git --git-dir=$REPO_DIR/.git --work-tree=$REPO_DIR"
+LOC_TMP="/tmp/ch.raphaelthomas-location.json"
 
 force=0
 flag="$1"
@@ -34,6 +35,7 @@ else
     $GIT pull origin develop
     $GIT rev-parse HEAD | tr -d '\n' > $COMMIT_LOG
     jekyll build --source $REPO_DIR --destination $DEV_DIR --config "$REPO_DIR/_config.yml,$REPO_DIR/_config-dev.yml"
+    cp $LOC_TMP "$DEV_DIR/data/location.json"
     rm $COMMIT_LOG
 fi
 
@@ -48,5 +50,6 @@ else
     $GIT pull origin master
     $GIT rev-parse HEAD | tr -d '\n' > $COMMIT_LOG
     jekyll build --source $REPO_DIR --destination $PROD_DIR --config "$REPO_DIR/_config.yml,$REPO_DIR/_config-prod.yml"
+    cp $LOC_TMP "$PROD_DIR/data/location.json"
     rm $COMMIT_LOG
 fi

@@ -32,7 +32,7 @@ if [[ "$force" -eq "0" && $LOCAL = $REMOTE ]]; then
     echo "Nothing to do for DEV"
 else
     $GIT pull origin develop
-    $GIT rev-parse HEAD > $COMMIT_LOG
+    $GIT rev-parse HEAD | tr -d '\n' > $COMMIT_LOG
     jekyll build --source $REPO_DIR --destination $DEV_DIR --config "$REPO_DIR/_config.yml,$REPO_DIR/_config-dev.yml"
     rm $COMMIT_LOG
 fi
@@ -46,7 +46,7 @@ if [[ "$force" -eq "0" && $LOCAL = $REMOTE ]]; then
     echo "Nothing to do for PROD"
 else
     $GIT pull origin master
-    $GIT rev-parse HEAD > $COMMIT_LOG
+    $GIT rev-parse HEAD | tr -d '\n' > $COMMIT_LOG
     jekyll build --source $REPO_DIR --destination $PROD_DIR --config "$REPO_DIR/_config.yml,$REPO_DIR/_config-prod.yml"
     rm $COMMIT_LOG
 fi

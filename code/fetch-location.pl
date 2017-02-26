@@ -130,9 +130,9 @@ sub get_google_maps_location {
             elsif ($type eq 'locality') {
                 $value += 25;
             }
-            elsif ($type eq 'colloquial_area') {
-                $value += 30;
-            }
+            # elsif ($type eq 'colloquial_area') {
+            #     $value += 30;
+            # }
         }
 
         if ($value > $loc_value) {

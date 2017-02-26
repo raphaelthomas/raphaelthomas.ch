@@ -26,8 +26,10 @@ sub main {
     my $lat  = $aprs_loc->{lat};
     my $lon  = $aprs_loc->{lng};
 
-    if (-r $config->{destination}) {
-        my $old_loc = decode_json(read_file($config->{destination}));
+    my @output_destinations = split(/,/, $config->{destination});
+
+    if (-r $output_destinations[0]) {
+        my $old_loc = decode_json(read_file($output_destinations[0]));
         return if ($time <= $old_loc->{time});
     }
 
@@ -40,7 +42,9 @@ sub main {
         time => $time
     };
 
-    write_file($config->{destination}, encode_json($data));
+    for my $destination (@output_destinations) {
+        write_file($destination, encode_json($data));
+    }
 
     return;
 }

@@ -54,7 +54,7 @@ d3.json("/data/location.json", function(error, data) {
           .attr("d", path);
     });
 
-    d3.select(self.frameElement).style("height", height + "px");
+    d3.select(self.frameElement).style("height", size + "px");
 
     $("#map-globe").one("click", function() {
         $("#typed-text").typed({

@@ -5,8 +5,8 @@ var svg = d3.select("div#map").append("svg")
     .attr("width", size)
     .attr("height", size);
 var projection = d3.geo.orthographic()
-    .scale(125)
-    .translate([size, size])
+    .scale(size/2)
+    .translate([size/2, size/2])
     .clipAngle(90)
     .precision(.1);
 

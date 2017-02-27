@@ -1,6 +1,4 @@
 var size = parseInt($("#map").height());
-console.log(size);
-size = 500;
 
 var svg = d3.select("div#map").append("svg")
     .attr("id", "map-globe")
@@ -8,7 +6,7 @@ var svg = d3.select("div#map").append("svg")
     .attr("height", size);
 var projection = d3.geo.orthographic()
     .scale(125)
-    .translate([size / 2, size / 2])
+    .translate([size, size])
     .clipAngle(90)
     .precision(.1);
 

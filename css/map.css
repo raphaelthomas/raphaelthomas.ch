@@ -1,6 +1,6 @@
 div#map {
     margin: 50px 0;
-    min-height: 255px;
+    height: 500px;
 }
 
 div#location-description {

@@ -1,13 +1,12 @@
-var width = 250,
-    height = 250;
+var size = $("div#map").height();
 
 var svg = d3.select("div#map").append("svg")
     .attr("id", "map-globe")
-    .attr("width", width)
-    .attr("height", height);
+    .attr("width", size)
+    .attr("height", size);
 var projection = d3.geo.orthographic()
     .scale(125)
-    .translate([width / 2, height / 2])
+    .translate([size / 2, size / 2])
     .clipAngle(90)
     .precision(.1);
 

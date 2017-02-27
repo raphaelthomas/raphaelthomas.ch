@@ -80,7 +80,7 @@ div#location-description {
 @media all and (max-width: 960px) {
     div#map {
         margin: 15px 0;
-        height: 250px;
+        height: 200px;
     }
 
     div#location-description {

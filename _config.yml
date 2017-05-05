@@ -34,4 +34,4 @@ kramdown:
   hard_wrap: false
 
 gems: ['jekyll-paginate']
-exclude: ['Gemfile', 'Gemfile.lock', 'screenshot.png']
+exclude: ['Gemfile', 'Gemfile.lock', 'LICENSE']

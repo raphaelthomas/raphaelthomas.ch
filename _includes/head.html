@@ -8,9 +8,11 @@
   <meta name="author" content="{{ site.author.name }}">
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="version" content="{% include commit %}">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="{{ site.title }}">
@@ -24,6 +26,7 @@
   <meta name="theme-color" content="#ffffff">
 
   <link rel="stylesheet" href="{{ "css/main.css" | prepend: site.baseurl }}">
+  <link rel="stylesheet" href="{{ "css/map.css" | prepend: site.baseurl }}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.baseurl }}feed.xml">
 </head>

@@ -1,0 +1,90 @@
+div#map {
+    margin: 30px 0;
+    height: 300px;
+}
+
+div#location-description {
+    min-height: 14px;
+    font-size: 14px;
+}
+
+.stroke {
+    fill: none;
+    stroke: none;
+}
+
+.fill {
+    fill: rgba(255,255,255,0.1);
+}
+
+.graticule {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 0.5px;
+    stroke-opacity: 0.35;
+    stroke-dasharray: 2,2;
+}
+
+.land {
+    fill: rgba(255,255,255,0.3);
+    stroke: #ffffff;
+    stroke-width: 0.5px;
+    stroke-opacity: 0.3;
+}
+
+@-webkit-keyframes pulseLocation {
+    0% {
+        opacity: 1;
+        r: 1px;
+        stroke: #EF0623;
+        stroke-width: 1px;
+    }
+    75% {
+        opacity: 0;
+        r: 20px;
+        stroke: #EF0623;
+        stroke-width: 0.25px;
+    }
+    100% {
+        opacity: 0;
+        r: 1px;
+        stroke: #ffffff;
+        stroke-width: 1px;
+    }
+}
+
+.location {
+    stroke-width: 1px;
+    stroke: #EF0623;
+    stroke-opacity: 1;
+    r: 1px;
+    opacity: 0;
+    fill: none;
+    -webkit-transform-origin: center;
+    -webkit-animation: pulseLocation 4s linear 1s infinite;
+}
+
+.typed-cursor{
+    opacity: 1;
+    -webkit-animation: blink 1s infinite;
+    -moz-animation: blink 1s infinite;
+    animation: blink 1s infinite;
+}
+
+@-webkit-keyframes blink {
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
+}
+
+@media all and (max-width: 960px) {
+    div#map {
+        margin: 15px 0;
+        height: 200px;
+    }
+
+    div#location-description {
+        min-height: 10px;
+        font-size: 10px;
+    }
+}

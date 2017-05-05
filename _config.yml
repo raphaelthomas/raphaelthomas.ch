@@ -1,8 +1,9 @@
 # Site settings
 title: 'Raphael Thomas Seebacher'
-description: ''
+description: 'engineer &middot; officer &middot; dancer &middot; bookworm &middot; crossfitter'
 # google_analytics: 'UA-XXXXXX-X'
 # disqus_shortname: 'your-disqus-name'
+active: true
 
 author:
   name: 'Raphael Thomas Seebacher'
@@ -19,6 +20,12 @@ defaults:
       type: 'posts'
     values:
         layout: 'post'
+  -
+    scope:
+      path: ''
+      type: 'pages'
+    values:
+      layout: 'page'
 
 # Build settings
 destination: _site
@@ -34,4 +41,4 @@ kramdown:
   hard_wrap: false
 
 gems: ['jekyll-paginate']
-exclude: ['Gemfile', 'Gemfile.lock', 'LICENSE']
+exclude: ['Gemfile', 'Gemfile.lock', 'code']

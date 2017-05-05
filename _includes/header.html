@@ -12,17 +12,18 @@
           <img src="{{ "images/profile.jpg" | prepend: site.baseurl }}" class="user-image" alt="My Profile Photo">
           <h1 class="panel-cover__title panel-title">{{ site.title }}</h1>
         </a>
-        <hr class="panel-cover__divider">
+
         <p class="panel-cover__description">{{ site.description }}</p>
-        <hr class="panel-cover__divider panel-cover__divider--secondary">
 
         <div class="navigation-wrapper">
 
+          {% if site.active %}
           <nav class="cover-navigation cover-navigation--primary">
             <ul class="navigation">
               <li class="navigation__item"><a href="{{ site.baseurl }}#blog" title="link to {{ site.title }} blog" class="blog-button">Blog</a></li>
             </ul>
           </nav>
+          {% endif %}
 
           <nav class="cover-navigation navigation--social">
             <ul class="navigation">
@@ -88,6 +89,14 @@
             </ul>
           </nav>
 
+        </div>
+
+        <div id="map" class="panel-main--map">
+        </div>
+        <div id="location-description" class="panel-main--location-description">
+            <div id="typed">
+                <span id="typed-text"></span>
+            </div>
         </div>
 
       </div>

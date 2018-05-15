@@ -26,22 +26,23 @@ identifier             = "about"
 url                    = "/about/"
 
 [params]
-include_rss            = true                          # include RSS <link> tag in <head> and show RSS icon
-latestpostscount       = 5                             # how many posts to display on the home page
-i18n_flags             = false                         # whether to display small country flags for available translations
+include_rss            = true
+latestpostscount       = 5
+i18n_flags             = false
 author                 = "Raphael Thomas"
-cachebuster            = true                          # add the current unix timestamp in query string for cache busting css assets
+# add the current unix timestamp in query string for cache busting css assets
+cachebuster            = true
 dateform               = "2006-01-02"
-dateformfull           = "Mon Jan 2 2006 15:04:05 MST"
-# description            = "Don't panic"
-extracssfiles          = [ "/css/override.css" ]       # In your `static` directory, add/remove files as necessary.
+dateformfull           = "2006-01-02 15:04:05 MST"
+# description            = ""
+# extracssfiles          = [ "/css/override.css" ]
 lang                   = "en"
 # faviconfile            = "img/leaf.ico"
 github                 = "https://github.com/raphaelthomas"
 instagram              = "https://www.instagram.com/raphael_thomas/"
 linkedin               = "https://www.linkedin.com/in/raphael-seebacher/"
-noshowreadtime         = false                         # if true, don't show "<x> minutes read" in posts
-selfintro              = ""                            # appears in the site header when set to a non-empty string
+noshowreadtime         = false
+selfintro              = "foo"
 
 highlightjs            = true
 # highlightjslanguages = ["go"]

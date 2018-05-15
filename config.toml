@@ -31,7 +31,7 @@ latestpostscount       = 5                             # how many posts to displ
 i18n_flags             = false                         # whether to display small country flags for available translations
 author                 = "Raphael Thomas"
 cachebuster            = true                          # add the current unix timestamp in query string for cache busting css assets
-dateform               = "Jan 2, 2006"
+dateform               = "2006-01-02"
 dateformfull           = "Mon Jan 2 2006 15:04:05 MST"
 # description            = "Don't panic"
 extracssfiles          = [ "/css/override.css" ]       # In your `static` directory, add/remove files as necessary.
@@ -49,4 +49,4 @@ highlightjs            = true
 
 piwik                  = false
 gitalk                 = false
-avatar                 = "images/raph.jpg"
+gravatar               = "cb979cc3781fd53475adc366bcc57731"

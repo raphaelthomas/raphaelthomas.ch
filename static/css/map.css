@@ -28,51 +28,24 @@ div#map {
     stroke-opacity: 0.3;
 }
 
-@keyframes pulseLocation {
-    0% {
-        stroke-opacity: 1;
-        opacity: 1;
-        r: 1px;
-        stroke: #EF0623;
-        stroke-width: 1px;
-    }
-    75% {
-        stroke-opacity: 0;
-        opacity: 0;
-        r: 50px;
-        stroke: #EF0623;
-        stroke-width: 50px;
-    }
-    100% {
-        stroke-opacity: 0;
-        opacity: 0;
-        r: 1px;
-        stroke: #ffffff;
-        stroke-width: 1px;
-    }
-}
-
 @-webkit-keyframes pulseLocation {
     0% {
         stroke-opacity: 1;
         opacity: 1;
         r: 1px;
         stroke: #EF0623;
-        stroke-width: 1px;
     }
     75% {
         stroke-opacity: 0;
         opacity: 0;
         r: 50px;
         stroke: #EF0623;
-        stroke-width: 50px;
     }
     100% {
         stroke-opacity: 0;
         opacity: 0;
         r: 1px;
         stroke: #ffffff;
-        stroke-width: 1px;
     }
 }
 
@@ -102,7 +75,6 @@ div#map {
 
 .location {
     border-width: 1px;
-    stroke-width: 100px;
     stroke: #EF0623;
     stroke-opacity: 0;
     r: 1px;

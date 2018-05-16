@@ -20,8 +20,14 @@ identifier             = "blog"
 url                    = "/blog/"
 
 [[menu.main]]
-name                   = "About"
+name                   = "QTH"
 weight                 = -110
+identifier             = "qth"
+url                    = "/qth/"
+
+[[menu.main]]
+name                   = "About"
+weight                 = -100
 identifier             = "about"
 url                    = "/about/"
 

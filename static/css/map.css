@@ -10,7 +10,7 @@ div#map {
 }
 
 .fill {
-    fill: rgba(0,0,0,0.1);
+    fill: rgba(0,0,0,0.05);
 }
 
 .graticule {
@@ -22,7 +22,7 @@ div#map {
 }
 
 .land {
-    fill: rgba(0,0,0,0.3);
+    fill: rgba(0,0,0,0.25);
     stroke: #000000;
     stroke-width: 0.5px;
     stroke-opacity: 0.3;
@@ -30,18 +30,21 @@ div#map {
 
 @keyframes pulseLocation {
     0% {
+        stroke-opacity: 1;
         opacity: 1;
         r: 1px;
         stroke: #EF0623;
         stroke-width: 1px;
     }
     75% {
+        stroke-opacity: 0;
         opacity: 0;
-        r: 25px;
+        r: 50px;
         stroke: #EF0623;
-        stroke-width: 25px;
+        stroke-width: 50px;
     }
     100% {
+        stroke-opacity: 0;
         opacity: 0;
         r: 1px;
         stroke: #ffffff;
@@ -51,18 +54,21 @@ div#map {
 
 @-webkit-keyframes pulseLocation {
     0% {
+        stroke-opacity: 1;
         opacity: 1;
         r: 1px;
         stroke: #EF0623;
         stroke-width: 1px;
     }
     75% {
+        stroke-opacity: 0;
         opacity: 0;
-        r: 25px;
+        r: 50px;
         stroke: #EF0623;
-        stroke-width: 25px;
+        stroke-width: 50px;
     }
     100% {
+        stroke-opacity: 0;
         opacity: 0;
         r: 1px;
         stroke: #ffffff;
@@ -72,18 +78,21 @@ div#map {
 
 @-moz-keyframes pulseLocation {
     0% {
+        stroke-opacity: 1;
         opacity: 1;
         r: 1px;
         stroke: #EF0623;
         stroke-width: 1px;
     }
     75% {
+        stroke-opacity: 0;
         opacity: 0;
-        r: 25px;
+        r: 50px;
         stroke: #EF0623;
-        stroke-width: 25px;
+        stroke-width: 50px;
     }
     100% {
+        stroke-opacity: 0;
         opacity: 0;
         r: 1px;
         stroke: #ffffff;
@@ -92,12 +101,13 @@ div#map {
 }
 
 .location {
-    stroke-width: 1px;
+    border-width: 1px;
+    stroke-width: 100px;
     stroke: #EF0623;
-    stroke-opacity: 1;
+    stroke-opacity: 0;
     r: 1px;
-    opacity: 1;
+    opacity: 0;
     fill: none;
-    -webkit-animation: pulseLocation 4s linear 1s infinite;
-    animation: pulseLocation 4s linear 1s infinite;
+    -webkit-animation: pulseLocation 4s linear 2s infinite;
+    animation: pulseLocation 4s linear 2s infinite;
 }

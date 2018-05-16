@@ -40,7 +40,7 @@ d3.json("/location.json", function(error, data) {
         .append("circle")
         .attr("cx", function (d) { return projection(d)[0]; })
         .attr("cy", function (d) { return projection(d)[1]; })
-        .attr("r", "1px")
+        .attr("r", "0.5px")
         .attr("class", "location");
 
     d3.json("/countries.json", function(error, world) {

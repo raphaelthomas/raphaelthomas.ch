@@ -4,6 +4,7 @@ var svg = d3.select("div#map").append("svg")
     .attr("id", "map-globe")
     .attr("width", size)
     .attr("height", size);
+
 var projection = d3.geo.orthographic()
     .scale(size/2)
     .translate([size/2, size/2])

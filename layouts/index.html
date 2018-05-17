@@ -10,7 +10,7 @@
             {{ partial "map.html" . }}
             {{ $totalpostscount := len (where .Data.Pages "Section" "blog") }}
             {{ $latestpostscount := .Site.Params.latestpostscount | default $totalpostscount }}
-            {{ if gt $latestpostscount 0 }}
+            {{ if and (gt $latestpostscount 0) (gt $totalpostscount 0) }}
                 <div class="page-heading">{{ i18n "latestPosts" }}</div>
                 <ul>
                     {{ range (first $latestpostscount (where .Data.Pages.ByPublishDate.Reverse "Section" "blog")) }}

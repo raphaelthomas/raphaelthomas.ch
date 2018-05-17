@@ -1,4 +1,4 @@
-baseurl             = "http://raphaelthomas.ch/"
+baseurl             = "https://raphaelthomas.ch/"
 builddrafts         = false
 
 canonifyurls        = true

@@ -1,37 +1,35 @@
 (function() {
-  var size = parseInt($("div#mapContainer").width()*0.5);
-  console.log(size);
-  $("canvas#map")[0].setAttribute("height", size);
-  $("canvas#map")[0].setAttribute("width", size);
+    var size = parseInt($("div#mapContainer").width()*0.5);
+    $("canvas#map")[0].setAttribute("height", size);
+    $("canvas#map")[0].setAttribute("width", size);
 
-  var globe = planetaryjs.planet();
-  globe.loadPlugin(autorotate(15));
-  globe.loadPlugin(drawGraticule("rgba(0,0,0,0.25)", 0.25));
-  globe.loadPlugin(planetaryjs.plugins.earth({
-    topojson: { file:   '/world-110m.json' },
-    oceans:   { fill:   'rgba(222,222,222, 0.1)' },
-    land:     { fill:   'rgba(222,222,222, 1)' },
-    borders:  { stroke: 'rgba(200,200,200, 1)' }
-  }));
-  globe.loadPlugin(planetaryjs.plugins.pings());
+    var globe = planetaryjs.planet();
+    globe.loadPlugin(autorotate(10));
+    globe.loadPlugin(drawGraticule("rgba(0,0,0,0.25)", 0.25));
+    globe.loadPlugin(planetaryjs.plugins.earth({
+        topojson: { file:   '/world-110m.json' },
+        oceans:   { fill:   'rgba(222,222,222,0.2)' },
+        land:     { fill:   'rgba(222,222,222,1)' },
+        borders:  { stroke: 'rgba(205,205,205,1)' }
+    }));
+    globe.loadPlugin(planetaryjs.plugins.pings());
 
-  globe.projection.scale(size/2-10).translate([size/2, size/2]).rotate([0, -15, 0]);
+    globe.projection.scale(size/2-10).translate([size/2, size/2]).rotate([0, -15, 0]);
 
-  d3.json("/location.json", function(error, data) {
-    $("#locationText").html(jQuery.timeago(new Date(data.time * 1000)) + (data.location ? " somewhere in " + data.location : ''));
-    setInterval(function() {
-        globe.plugins.pings.add(data.coordinates[0], data.coordinates[1], { color: 'red', ttl: 2000, angle: 10 });
-    }, 2500);
-  });
+    d3.json("/location.json", function(error, data) {
+        globe.projection.rotate([-data.coordinates[0], -data.coordinates[1]]);
+        $("#locationText").html(jQuery.timeago(new Date(data.time * 1000)) + (data.location ? " somewhere in " + data.location : ''));
+        ping();
 
-  var canvas = document.getElementById('map');
-  if (window.devicePixelRatio == 2) {
-    canvas.width = 800;
-    canvas.height = 800;
-    context = canvas.getContext('2d');
-    context.scale(2, 2);
-  }
-  globe.draw(canvas);
+        function ping() {
+            globe.plugins.pings.add(data.coordinates[0], data.coordinates[1], { color: 'red', ttl: 2500, angle: 15 });
+            setTimeout(function() { ping(); }, 5000); 
+        };
+    });
+
+    var canvas = document.getElementById('map');
+    globe.draw(canvas);
+
 
   function drawGraticule(color, width) {
     return function(planet) {

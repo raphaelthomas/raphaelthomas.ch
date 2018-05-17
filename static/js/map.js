@@ -1,7 +1,12 @@
 (function() {
+  var size = parseInt($("div#mapContainer").width()*0.5);
+  console.log(size);
+  $("canvas#map")[0].setAttribute("height", size);
+  $("canvas#map")[0].setAttribute("width", size);
+
   var globe = planetaryjs.planet();
   globe.loadPlugin(autorotate(15));
-  globe.loadPlugin(drawGraticule());
+  globe.loadPlugin(drawGraticule("rgba(0,0,0,0.25)", 0.25));
   globe.loadPlugin(planetaryjs.plugins.earth({
     topojson: { file:   '/world-110m.json' },
     oceans:   { fill:   'rgba(222,222,222, 0.1)' },
@@ -10,10 +15,10 @@
   }));
   globe.loadPlugin(planetaryjs.plugins.pings());
 
-  globe.projection.scale(175).translate([175, 175]).rotate([0, -15, 0]);
+  globe.projection.scale(size/2-10).translate([size/2, size/2]).rotate([0, -15, 0]);
 
   d3.json("/location.json", function(error, data) {
-    // $("#locationText").html(jQuery.timeago(new Date(data.time * 1000)) + (data.location ? " somewhere in " + data.location : ''));
+    $("#locationText").html(jQuery.timeago(new Date(data.time * 1000)) + (data.location ? " somewhere in " + data.location : ''));
     setInterval(function() {
         globe.plugins.pings.add(data.coordinates[0], data.coordinates[1], { color: 'red', ttl: 2000, angle: 10 });
     }, 2500);
@@ -28,15 +33,15 @@
   }
   globe.draw(canvas);
 
-  function drawGraticule() {
+  function drawGraticule(color, width) {
     return function(planet) {
       planet.onDraw(function() {
         planet.withSavedContext(function(context) {
           var graticule = d3.geo.graticule();
           context.beginPath();
           planet.path.context(context)(graticule());
-          context.strokeStyle = "rgba(0,0,0,0.25)";
-          context.lineWidth = "0.25";
+          context.strokeStyle = color;
+          context.lineWidth = width;
           context.stroke();
         });
       });

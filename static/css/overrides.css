@@ -1,3 +1,8 @@
 section.header .name {
   font-size: 25px;
 }
+
+div#mapContainer {
+    margin-top: 25px;
+    margin-bottom: 50px;
+}

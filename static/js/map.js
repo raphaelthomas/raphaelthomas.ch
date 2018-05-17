@@ -4,13 +4,13 @@
   globe.loadPlugin(drawGraticule());
   globe.loadPlugin(planetaryjs.plugins.earth({
     topojson: { file:   '/world-110m.json' },
-    oceans:   { fill:   'rgba(200,200,200, 0.1)' },
-    land:     { fill:   'rgba(200,200,200, 1)' },
-    borders:  { stroke: 'rgba(127,127,127, 0.25' }
+    oceans:   { fill:   'rgba(222,222,222, 0.1)' },
+    land:     { fill:   'rgba(222,222,222, 1)' },
+    borders:  { stroke: 'rgba(200,200,200, 1)' }
   }));
   globe.loadPlugin(planetaryjs.plugins.pings());
 
-  globe.projection.scale(175).translate([175, 175]).rotate([0, -10, 0]);
+  globe.projection.scale(175).translate([175, 175]).rotate([0, -15, 0]);
 
   d3.json("/location.json", function(error, data) {
     // $("#locationText").html(jQuery.timeago(new Date(data.time * 1000)) + (data.location ? " somewhere in " + data.location : ''));

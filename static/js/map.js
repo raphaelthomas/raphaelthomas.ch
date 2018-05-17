@@ -12,6 +12,7 @@ var projection = d3.geo.orthographic()
     .precision(.1);
 
 d3.json("/location.json", function(error, data) {
+    $("#locationText").html(jQuery.timeago(new Date(data.time * 1000)) + (data.location ? " somewhere in " + data.location : ''));
     projection.rotate([-data.coordinates[0], -data.coordinates[1], 0]);
 
     var path = d3.geo.path().projection(projection);

@@ -1,4 +1,4 @@
-var size = parseInt($("#map").height());
+var size = parseInt($("#map").width());
 
 var svg = d3.select("div#map").append("svg")
     .attr("id", "map-globe")

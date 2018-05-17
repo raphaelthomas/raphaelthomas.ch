@@ -1,3 +1,6 @@
+baseurl             = "http://raphaelthomas.ch/"
+builddrafts         = false
+
 canonifyurls        = true
 contentdir          = "content"
 languageCode        = "en-US"
@@ -24,6 +27,7 @@ blog  = "blog/:slug/"
 # url                    = "/about/"
 
 [params]
+cachebuster         = false
 include_rss            = true
 latestpostscount       = 5
 i18n_flags             = false

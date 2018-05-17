@@ -1,5 +1,3 @@
-baseurl             = "http://dev.raphaelthomas.ch/"
-builddrafts         = false
 canonifyurls        = true
 contentdir          = "content"
 languageCode        = "en-US"
@@ -30,7 +28,6 @@ include_rss            = true
 latestpostscount       = 5
 i18n_flags             = false
 author                 = "Raphael Thomas"
-cachebuster            = true
 dateform               = "2006-01-02"
 dateformfull           = "2006-01-02 15:04:05 MST"
 # description            = ""

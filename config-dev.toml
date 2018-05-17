@@ -1,0 +1,5 @@
+baseurl             = "http://dev.raphaelthomas.ch/"
+builddrafts         = true
+
+[params]
+cachebuster         = true

@@ -14,32 +14,50 @@
         borders:  { stroke: 'rgba(220,220,220,1)' }
     }));
     globe.loadPlugin(planetaryjs.plugins.pings());
+    globe.loadPlugin(rotatelonlat(25));
 
     var lonStart = Math.floor(Math.random() * 360) - 180;
     var latStart = Math.floor(Math.random() * 180) - 90;
     globe.projection.scale(size/2-10).translate([size/2, size/2]).rotate([-lonStart, -latStart, 0]);
 
-    d3.json("/location.json", function(error, data) {
-        function ping() {
-            globe.plugins.pings.add(data.coordinates[0], data.coordinates[1], { color: '#428BCA', ttl: 2500, angle: 10 });
-            setTimeout(function() { ping(); }, 5000); 
-        };
+    var canvas = document.getElementById('map');
+    globe.draw(canvas);
 
-        function success() {
-            $("#locationText").fadeOut(function() {
-                var timestamp = new Date(data.time * 1000).toISOString();
-                $(this).empty().append('<time id="locationTime" datetime="'+timestamp+'">'+timestamp+'</time>');
-                $(this).append((data.location ? " somewhere in " + data.location : ''));
-                $("time#locationTime").timeago();
-            }).fadeIn(750, function() { ping(); });
+    var oldData = null;
+    var doPing  = false;
+
+    function ping() {
+        if (doPing) {
+            globe.plugins.pings.add(oldData.coordinates[0], oldData.coordinates[1], { color: '#428BCA', ttl: 2500, angle: 10 });
         }
 
-        globe.loadPlugin(rotateLonLat(25, data.coordinates[0], data.coordinates[1], success));
+        setTimeout(function() { ping(); }, 5000);
+    };
 
-        var canvas = document.getElementById('map');
-        globe.draw(canvas);
+    function success() {
+        $("#locationText").fadeOut(function() {
+            var timestamp = new Date(oldData.time * 1000).toISOString();
+            $(this).empty().append('<time id="locationTime" datetime="'+timestamp+'">'+timestamp+'</time>');
+            $(this).append((oldData.location ? " somewhere in " + oldData.location : ''));
+            $("time#locationTime").timeago();
+        }).fadeIn(750, function() { doPing = true;});
+    }
 
-    });
+    function updateLocation() {
+        var cachebuster = Math.round(new Date().getTime() / 1000);
+        d3.json("/location.json?"+cachebuster, function(error, data) {
+            if (!oldData || oldData.time < data.time) {
+                // doPing = false;
+                oldData = data;
+                globe.plugins.rotatelonlat.init(data.coordinates[0], data.coordinates[1], success);
+            }
+
+            setTimeout(function() { updateLocation(); }, 60000);
+        });
+    }
+
+    ping();
+    updateLocation();
 
     function drawGraticule(color, width) {
         return function(planet) {
@@ -56,11 +74,24 @@
         };
     };
 
-    function rotateLonLat(degPerSec, lon, lat, rotateDone) {
+    function rotatelonlat(degPerSec) {
         return function(planet) {
+            var rateLatLon = null;
             var lastTick = null;
-            var paused = false;
-            var rateLatLon;
+            var paused = true;
+            var lon, lat;
+            var rotateDone;
+
+            planet.plugins.rotatelonlat = {
+                init: function(initLon, initLat, initRotateDone) {
+                    lon = initLon;
+                    lat = initLat;
+                    paused = false;
+                    lastTick = null;
+                    rateLatLon = null;
+                    rotateDone = initRotateDone;
+                },
+            };
 
             planet.onDraw(function() {
                 if (paused || !lastTick) {

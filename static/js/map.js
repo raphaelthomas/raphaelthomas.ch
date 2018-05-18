@@ -9,7 +9,7 @@
     globe.loadPlugin(drawGraticule("rgba(0,0,0,0.25)", 0.25));
     globe.loadPlugin(planetaryjs.plugins.earth({
         topojson: { file:   '/world-110m.json' },
-        oceans:   { fill:   'rgba(220,220,220,0.2)' },
+        oceans:   { fill:   'rgba(230,230,230,0.2)' },
         land:     { fill:   'rgba(230,230,230,1)' },
         borders:  { stroke: 'rgba(220,220,220,1)' }
     }));

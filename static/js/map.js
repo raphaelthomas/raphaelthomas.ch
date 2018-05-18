@@ -43,21 +43,33 @@
         }).fadeIn(750, function() { doPing = true;});
     }
 
-    function updateLocation() {
+    function updateLocation(init) {
         var cachebuster = Math.round(new Date().getTime() / 1000);
         d3.json("/location.json?"+cachebuster, function(error, data) {
             if (!oldData || oldData.time < data.time) {
                 // doPing = false;
                 oldData = data;
-                globe.plugins.rotatelonlat.init(data.coordinates[0], data.coordinates[1], success);
+
+                if (init) {
+                    globe.plugins.rotatelonlat.init(data.coordinates[0], data.coordinates[1], success);
+                }
+                else {
+                    $("#locationText").fadeOut(function() {
+                        $(this).empty().append('Location updated. Recalibrating the flux capacitor...');
+                    }).fadeIn(750, function() {
+                        setTimeout(function() {
+                            globe.plugins.rotatelonlat.init(data.coordinates[0], data.coordinates[1], success);
+                        }, 2500);
+                    });
+                }
             }
 
-            setTimeout(function() { updateLocation(); }, 60000);
+            setTimeout(function() { updateLocation(false); }, 60000);
         });
     }
 
     ping();
-    updateLocation();
+    updateLocation(true);
 
     function drawGraticule(color, width) {
         return function(planet) {

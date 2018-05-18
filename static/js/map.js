@@ -4,7 +4,6 @@
     $("canvas#map")[0].setAttribute("width", size);
 
     var globe = planetaryjs.planet();
-    globe.loadPlugin(autorotate(10));
     globe.loadPlugin(drawGraticule("rgba(0,0,0,0.25)", 0.25));
     globe.loadPlugin(planetaryjs.plugins.earth({
         topojson: { file:   '/world-110m.json' },
@@ -14,59 +13,85 @@
     }));
     globe.loadPlugin(planetaryjs.plugins.pings());
 
-    globe.projection.scale(size/2-10).translate([size/2, size/2]).rotate([0, -15, 0]);
+    var lonStart = Math.floor(Math.random() * 360) - 180;
+    var latStart = Math.floor(Math.random() * 180) - 90;
+    globe.projection.scale(size/2-10).translate([size/2, size/2]).rotate([-lonStart, -latStart, 0]);
 
     d3.json("/location.json", function(error, data) {
-        globe.projection.rotate([-data.coordinates[0], -data.coordinates[1]]);
-        $("#locationText").html(jQuery.timeago(new Date(data.time * 1000)) + (data.location ? " somewhere in " + data.location : ''));
-        ping();
-
         function ping() {
-            globe.plugins.pings.add(data.coordinates[0], data.coordinates[1], { color: 'red', ttl: 2500, angle: 15 });
+            globe.plugins.pings.add(data.coordinates[0], data.coordinates[1], { color: 'red', ttl: 2500, angle: 25 });
             setTimeout(function() { ping(); }, 5000); 
         };
+
+        function success() {
+            $("#locationText").fadeOut(function() {
+                $(this).text(jQuery.timeago(new Date(data.time * 1000)) + (data.location ? " somewhere in " + data.location : ''));
+                ping();
+            }).fadeIn(1000);
+        }
+
+        globe.loadPlugin(rotateLonLat(25, data.coordinates[0], data.coordinates[1], success));
+
+        var canvas = document.getElementById('map');
+        globe.draw(canvas);
+
     });
 
-    var canvas = document.getElementById('map');
-    globe.draw(canvas);
-
-
-  function drawGraticule(color, width) {
-    return function(planet) {
-      planet.onDraw(function() {
-        planet.withSavedContext(function(context) {
-          var graticule = d3.geo.graticule();
-          context.beginPath();
-          planet.path.context(context)(graticule());
-          context.strokeStyle = color;
-          context.lineWidth = width;
-          context.stroke();
-        });
-      });
+    function drawGraticule(color, width) {
+        return function(planet) {
+            planet.onDraw(function() {
+                planet.withSavedContext(function(context) {
+                    var graticule = d3.geo.graticule();
+                    context.beginPath();
+                    planet.path.context(context)(graticule());
+                    context.strokeStyle = color;
+                    context.lineWidth = width;
+                    context.stroke();
+                });
+            });
+        };
     };
-  };
 
-  function autorotate(degPerSec) {
-    return function(planet) {
-      var lastTick = null;
-      var paused = false;
-      planet.plugins.autorotate = {
-        pause:  function() { paused = true;  },
-        resume: function() { paused = false; }
-      };
-      planet.onDraw(function() {
-        if (paused || !lastTick) {
-          lastTick = new Date();
-        } else {
-          var now = new Date();
-          var delta = now - lastTick;
-          var rotation = planet.projection.rotate();
-          rotation[0] += degPerSec * delta / 1000;
-          if (rotation[0] >= 180) rotation[0] -= 360;
-          planet.projection.rotate(rotation);
-          lastTick = now;
-        }
-      });
+    function rotateLonLat(degPerSec, lon, lat, rotateDone) {
+        return function(planet) {
+            var lastTick = null;
+            var paused = false;
+            var rateLatLon;
+
+            planet.onDraw(function() {
+                if (paused || !lastTick) {
+                    lastTick = new Date();
+                }
+                else {
+                    var now = new Date();
+                    var rotation = planet.projection.rotate();
+
+                    var diffLon = Math.round((parseFloat(lon) + parseFloat(rotation[0])) * 1000)/1000;
+                    var diffLat = Math.round((parseFloat(lat) + parseFloat(rotation[1])) * 1000)/1000;
+
+                    if (!rateLatLon) { rateLatLon = Math.abs(diffLat/diffLon); };
+
+                    var delta = Math.round(degPerSec * (now - lastTick))/1000;
+                    var deltaLon = delta;
+                    var deltaLat = delta * rateLatLon;
+
+                    if (diffLon > 0) { deltaLon *= -1 };
+                    if (diffLat > 0) { deltaLat *= -1 };
+
+                    // console.log("currLon:" + rotation[0] + "\nlon:" + lon + "\ndeltaLon:" + deltaLon + "\ndiffLon:" + diffLon + "\n\ncurrLat:" +rotation[1] + "\nlat:" + lat + "\ndeltaLat:" + deltaLat + "\ndiffLat:" + diffLat);
+
+                    rotation[0] += deltaLon;
+                    rotation[1] += deltaLat;
+
+                    if ((Math.abs(diffLat) <= Math.abs(deltaLat)) || (Math.abs(diffLon) <= Math.abs(deltaLon))) {
+                        paused = true;
+                        rotateDone();
+                    };
+
+                    planet.projection.rotate(rotation);
+                    lastTick = now;
+                }
+            });
+        };
     };
-  };
 })();

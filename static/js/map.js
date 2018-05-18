@@ -21,17 +21,17 @@
 
     d3.json("/location.json", function(error, data) {
         function ping() {
-            globe.plugins.pings.add(data.coordinates[0], data.coordinates[1], { color: 'red', ttl: 2500, angle: 15 });
+            globe.plugins.pings.add(data.coordinates[0], data.coordinates[1], { color: 'red', ttl: 2500, angle: 10 });
             setTimeout(function() { ping(); }, 5000); 
         };
 
         function success() {
             $("#locationText").fadeOut(function() {
-                $(this).empty().append('<time id="locationTime" datetime="'+new Date(data.time * 1000)+'">'+new Date(data.time * 1000)+'</time>');
-                $("time#locationTime").timeago();
+                var timestamp = new Date(data.time * 1000).toISOString();
+                $(this).empty().append('<time id="locationTime" datetime="'+timestamp+'">'+timestamp+'</time>');
                 $(this).append((data.location ? " somewhere in " + data.location : ''));
-                ping();
-            }).fadeIn(750);
+                $("time#locationTime").timeago();
+            }).fadeIn(750, function() { ping(); });
         }
 
         globe.loadPlugin(rotateLonLat(25, data.coordinates[0], data.coordinates[1], success));

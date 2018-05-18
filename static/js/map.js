@@ -1,5 +1,7 @@
 (function() {
-    var size = parseInt($("div#mapContainer").width()*0.5);
+    var size = parseInt($("div#mapContainer").width());
+    if (size > 500) { size *= 0.5; };
+
     $("canvas#map")[0].setAttribute("height", size);
     $("canvas#map")[0].setAttribute("width", size);
 
@@ -19,13 +21,15 @@
 
     d3.json("/location.json", function(error, data) {
         function ping() {
-            globe.plugins.pings.add(data.coordinates[0], data.coordinates[1], { color: 'red', ttl: 2500, angle: 25 });
+            globe.plugins.pings.add(data.coordinates[0], data.coordinates[1], { color: 'red', ttl: 2500, angle: 15 });
             setTimeout(function() { ping(); }, 5000); 
         };
 
         function success() {
-            $("#locationText").fadeOut(function() {
-                $(this).text(jQuery.timeago(new Date(data.time * 1000)) + (data.location ? " somewhere in " + data.location : ''));
+            $("#locationContainer").fadeOut(function() {
+                $(this).empty().append('<time id="locationTime" datetime="'+new Date(data.time * 1000)+'">'+new Date(data.time * 1000)+'</time>');
+                $("time#locationTime").timeago();
+                $(this).append((data.location ? " somewhere in " + data.location : ''));
                 ping();
             }).fadeIn(1000);
         }

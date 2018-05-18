@@ -10,3 +10,7 @@ div#mapContainer {
 div#locationTitle {
     margin-bottom: 0;
 }
+
+section.main .container .content .post-item .meta {
+    text-align: left;
+}

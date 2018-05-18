@@ -26,12 +26,12 @@
         };
 
         function success() {
-            $("#locationContainer").fadeOut(function() {
+            $("#locationText").fadeOut(function() {
                 $(this).empty().append('<time id="locationTime" datetime="'+new Date(data.time * 1000)+'">'+new Date(data.time * 1000)+'</time>');
                 $("time#locationTime").timeago();
                 $(this).append((data.location ? " somewhere in " + data.location : ''));
                 ping();
-            }).fadeIn(1000);
+            }).fadeIn(750);
         }
 
         globe.loadPlugin(rotateLonLat(25, data.coordinates[0], data.coordinates[1], success));

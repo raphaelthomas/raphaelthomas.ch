@@ -1,3 +1,5 @@
 ---
 - id: latestQTH
   translation: "Latest QTH"
+- id: textQTHwait
+  translation: "Please stand by. Satellite moving into position..."

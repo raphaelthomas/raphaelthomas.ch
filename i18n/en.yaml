@@ -2,4 +2,4 @@
 - id: latestQTH
   translation: "Latest QTH"
 - id: textQTHwait
-  translation: "Please stand by. Satellite moving into position..."
+  translation: "Please stand by. \U0001F6F0 moving into position..."

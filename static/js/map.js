@@ -9,9 +9,9 @@
     globe.loadPlugin(drawGraticule("rgba(0,0,0,0.25)", 0.25));
     globe.loadPlugin(planetaryjs.plugins.earth({
         topojson: { file:   '/world-110m.json' },
-        oceans:   { fill:   'rgba(222,222,222,0.2)' },
-        land:     { fill:   'rgba(222,222,222,1)' },
-        borders:  { stroke: 'rgba(205,205,205,1)' }
+        oceans:   { fill:   'rgba(210,210,210,0.2)' },
+        land:     { fill:   'rgba(230,230,230,1)' },
+        borders:  { stroke: 'rgba(220,220,220,1)' }
     }));
     globe.loadPlugin(planetaryjs.plugins.pings());
 
@@ -21,7 +21,7 @@
 
     d3.json("/location.json", function(error, data) {
         function ping() {
-            globe.plugins.pings.add(data.coordinates[0], data.coordinates[1], { color: 'red', ttl: 2500, angle: 10 });
+            globe.plugins.pings.add(data.coordinates[0], data.coordinates[1], { color: '#428BCA', ttl: 2500, angle: 10 });
             setTimeout(function() { ping(); }, 5000); 
         };
 

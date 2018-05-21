@@ -24,10 +24,10 @@
     globe.draw(canvas);
 
     var oldData = null;
-    var doPing  = false;
+    var doPing  = true;
 
     function ping() {
-        if (doPing) {
+        if (doPing && oldData) {
             globe.plugins.pings.add(oldData.coordinates[0], oldData.coordinates[1], { color: '#428BCA', ttl: 2500, angle: 10 });
         }
 
@@ -47,13 +47,13 @@
         var cachebuster = Math.round(new Date().getTime() / 1000);
         d3.json("/location.json?"+cachebuster, function(error, data) {
             if (!oldData || oldData.time < data.time) {
-                // doPing = false;
                 oldData = data;
 
                 if (init) {
                     globe.plugins.rotatelonlat.init(data.coordinates[0], data.coordinates[1], success);
                 }
                 else {
+                    doPing = false;
                     $("#locationText").fadeOut(function() {
                         $(this).empty().append('Location updated. Recalibrating the flux capacitor...');
                     }).fadeIn(750, function() {

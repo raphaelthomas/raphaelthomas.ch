@@ -1,7 +1,7 @@
 REPO_URL="https://github.com/raphaelthomas/raphaelthomas.ch.git"
 REPO_DIR="/tmp/raphaelthomas.ch"
 PROD_DIR="/var/www/ch.raphaelthomas"
-COMMIT_LOG="$REPO_DIR/commit"
+COMMIT_LOG="$REPO_DIR/content/commit"
 GIT="git --git-dir=$REPO_DIR/.git --work-tree=$REPO_DIR"
 LOC_TMP="/tmp/ch.raphaelthomas-location.json"
 

@@ -64,7 +64,7 @@
                 }
             }
 
-            setTimeout(function() { updateLocation(false); }, 60000);
+            setTimeout(function() { updateLocation(false); }, 30000);
         });
     }
 

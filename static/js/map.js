@@ -14,7 +14,7 @@
         borders:  { stroke: 'rgba(220,220,220,1)' }
     }));
     globe.loadPlugin(planetaryjs.plugins.pings());
-    globe.loadPlugin(rotatelonlat(25));
+    globe.loadPlugin(rotatelonlat(40));
 
     var lonStart = Math.floor(Math.random() * 360) - 180;
     var latStart = Math.floor(Math.random() * 180) - 90;
@@ -116,7 +116,18 @@
                     var diffLon = Math.round((parseFloat(lon) + parseFloat(rotation[0])) * 1000)/1000;
                     var diffLat = Math.round((parseFloat(lat) + parseFloat(rotation[1])) * 1000)/1000;
 
-                    if (!rateLatLon) { rateLatLon = Math.abs(diffLat/diffLon); };
+                    if (!rateLatLon) {
+                        if (diffLon == 0) {
+                            rateLatLon = 1;
+                        }
+                        else {
+                            rateLatLon = Math.abs(diffLat/diffLon);
+                        }
+
+                        if (rateLatLon > 1) {
+                            degPerSec = degPerSec/rateLatLon;
+                        }
+                    };
 
                     var delta = Math.round(degPerSec * (now - lastTick))/1000;
                     var deltaLon = delta;
@@ -124,8 +135,6 @@
 
                     if (diffLon > 0) { deltaLon *= -1 };
                     if (diffLat > 0) { deltaLat *= -1 };
-
-                    // console.log("currLon:" + rotation[0] + "\nlon:" + lon + "\ndeltaLon:" + deltaLon + "\ndiffLon:" + diffLon + "\n\ncurrLat:" +rotation[1] + "\nlat:" + lat + "\ndeltaLat:" + deltaLat + "\ndiffLat:" + diffLat);
 
                     rotation[0] += deltaLon;
                     rotation[1] += deltaLat;

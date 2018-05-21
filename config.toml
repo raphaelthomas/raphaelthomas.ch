@@ -1,18 +1,18 @@
-baseurl             = "https://raphaelthomas.ch/"
-builddrafts         = false
+baseurl                = "https://raphaelthomas.ch/"
+builddrafts            = false
 
-canonifyurls        = true
-contentdir          = "content"
-languageCode        = "en-US"
-layoutdir           = "layouts"
-publishdir          = "public"
-theme               = "cocoa"
-author              = "Raphael Thomas"
-title               = "Raphael Thomas"
-pluralizelisttitles = false
+canonifyurls           = true
+contentdir             = "content"
+languageCode           = "en-US"
+layoutdir              = "layouts"
+publishdir             = "public"
+theme                  = "cocoa"
+author                 = "Raphael Thomas"
+title                  = "Raphael Thomas"
+pluralizelisttitles    = false
 
 [permalinks]
-blog  = "blog/:slug/"
+blog                   = "blog/:slug/"
 
 [[menu.main]]
 name                   = "Blog"
@@ -20,14 +20,14 @@ weight                 = -120
 identifier             = "blog"
 url                    = "/blog/"
 
-# [[menu.main]]
-# name                   = "About"
-# weight                 = -100
-# identifier             = "about"
-# url                    = "/about/"
+[[menu.main]]
+name                   = "About"
+weight                 = -100
+identifier             = "about"
+url                    = "/about/"
 
 [params]
-cachebuster         = false
+cachebuster            = false
 include_rss            = true
 latestpostscount       = 5
 i18n_flags             = false
@@ -41,11 +41,12 @@ lang                   = "en"
 github                 = "https://github.com/raphaelthomas"
 instagram              = "https://www.instagram.com/raphael_thomas/"
 linkedin               = "https://www.linkedin.com/in/raphael-seebacher/"
+keybase                = "https://keybase.io/raphaelthomas"
 noshowreadtime         = false
-selfintro              = "engineer · officer · bookworm · crossfitter · radio man · photography explorer"
+# selfintro              = "engineer · officer · bookworm · crossfitter · radio man · photography explorer"
 highlightjs            = true
-highlightjslanguages = ["go", "javascript"]
-highlightjsStyle     = "default"
+highlightjslanguages   = ["go", "javascript"]
+highlightjsStyle       = "default"
 piwik                  = false
 gitalk                 = false
 gravatar               = "cb979cc3781fd53475adc366bcc57731"

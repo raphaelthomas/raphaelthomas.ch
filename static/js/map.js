@@ -39,7 +39,7 @@
             var timestamp = new Date(oldData.time * 1000).toISOString();
             $(this).empty().append('<time id="locationTime" datetime="'+timestamp+'">'+timestamp+'</time>');
             $(this).append((oldData.location ? " somewhere in " + oldData.location : ''));
-            $(this).prop('title', oldData.source);
+            $(this).prop('title', 'via '+oldData.source);
             $("time#locationTime").timeago();
         }).fadeIn(750, function() { doPing = true;});
     }

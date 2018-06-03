@@ -26,34 +26,16 @@ my $log = 0;
 sub main {
     my $config = get_config();
 
-    my $aprsfi_location = get_aprsfi_location($config->{aprsfi});
-    $log && print "Location from aprs.fi: ".encode_json($aprsfi_location)."\n";
+    my $locations;
 
-    my $inreach_location = get_inreach_location($config->{inreach});
-    $log && print "Location from InReach API: ".encode_json($inreach_location)."\n";
+    push(@$locations, get_aprsfi_location($config->{aprsfi}));
+    push(@$locations, get_inreach_location($config->{inreach}));
 
-    my $location;
+    return if (!scalar(@$locations));
 
-    if (!$aprsfi_location && !$inreach_location) {
-        return;
-    }
-    elsif ($aprsfi_location && !$inreach_location) {
-        $location = $aprsfi_location;
-    }
-    elsif (!$aprsfi_location && $inreach_location) {
-        $location = $inreach_location;
-    }
-    elsif ($aprsfi_location && $inreach_location) {
-        if ($aprsfi_location->{timestamp} >= $inreach_location->{timestamp}) {
-            $location = $aprsfi_location;
-        }
-        else {
-            $location = $inreach_location;
-        }
-    }
-    else {
-        return;
-    }
+    @$locations = sort { $b->{timestamp} <=> $a->{timestamp} } @$locations;
+
+    my $location = $locations->[0];
 
     if ((! $config->{force}) && (-r $config->{destinations}->[0])) {
         my $old_loc = decode_json(read_file($config->{destinations}->[0]));
@@ -112,6 +94,8 @@ sub get_config {
 sub get_aprsfi_location {
     my $config = shift;
 
+    return if (!$config);
+
     my $ua = LWP::UserAgent->new();
     my $response = $ua->get("$APRSFI_API?name=$config->{callsign}&what=loc&format=json&apikey=$config->{key}");
 
@@ -129,17 +113,23 @@ sub get_aprsfi_location {
 
     # sort entries based on lasttime descending, return largest
     for my $loc_entry (sort { $b->{lasttime} <=> $a->{lasttime} } @{$aprs_loc->{entries}}) {
-        return {
+        my $location = {
             timestamp => int($loc_entry->{time}),
             latitude  => $loc_entry->{lat},
             longitude => $loc_entry->{lng},
             source    => 'APRS path '.$loc_entry->{path},
         };
+
+        $log && print "Location from aprs.fi: ".encode_json($location)."\n";
+
+        return $location;
     }
 }
 
 sub get_inreach_location {
     my $config = shift;
+
+    return if (!$config);
 
     my $ua = LWP::UserAgent->new();
     my $request = GET "$INREACH_API/$config->{user}";
@@ -165,12 +155,16 @@ sub get_inreach_location {
 
     my $t = Time::Piece->strptime($data->{time_utc}, "%m/%d/%Y %I:%M:%S %p");
 
-    return {
+    my $location = {
         timestamp => $t->epoch(),
         latitude  => $data->{latitude},
         longitude => $data->{longitude},
-        source    => 'Iridium satellite network',
+        source    => $data->{device_type}.' and Iridium satellite network',
     };
+
+    $log && print "Location from InReach API: ".encode_json($location)."\n";
+
+    return $location;
 }
 
 sub reverse_geocode {

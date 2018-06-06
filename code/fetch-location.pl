@@ -183,22 +183,23 @@ sub reverse_geocode {
     my $address = $geo_loc->{address};
 
     if ($address->{locality}) {
-        $loc_text .= " $address->{locality}";
+        $loc_text .= "$address->{locality}";
     }
     elsif ($address->{suburb}) {
-        $loc_text .= " $address->{suburb}";
+        $loc_text .= "$address->{suburb}";
     }
     elsif ($address->{city}) {
-        $loc_text .= " $address->{city}";
+        $loc_text .= "$address->{city}";
     }
 
     if ($address->{country}) {
-        $loc_text .= ", $address->{country}";
+        $loc_text .= ", " if ($loc_text ne '');
+        $loc_text .= "$address->{country}";
     }
 
     $loc_text = $geo_loc->{display_name} if ($loc_text eq '');
 
-    return "$loc_text.";
+    return "$loc_text";
 }
 
 main();

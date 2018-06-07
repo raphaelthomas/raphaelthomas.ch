@@ -27,42 +27,93 @@ sub main {
     print Dumper($config);
 
     for my $track (@{$config->{tracks}}) {
-        print Dumper($track);
+        my $points  = get_track_points($track, $config->{sources});
+        next if (!$points);
 
-        # my $points = get_track_points($track, $config->{sources});
-        # my $geojson = create_geojson_from_points($points);
-        # for my $destination (@{$config->{output}}) {
-        #     write_file($destination, $data);
-        # }
+        my $geojson = get_geojson_from_points($points);
+        next if (!$geojson);
+
+        for my $destination (@{$config->{output}}) {
+            write_file("$destination/$track->{name}.json", $geojson);
+        }
     }
-
-    # get_inreach_location($config->{inreach});
-
-    # my $data = encode_json(
-    #     {
-    #         coordinates => [$location->{longitude}, $location->{latitude}],
-    #         location    => encode_entities($location_text) // '',
-    #         source      => encode_entities($location->{source}) // '',
-    #         time        => $location->{timestamp}
-    #     }
-    # );
 
     return;
 }
 
-sub get_config {
-    my $config_cli = {};
+sub get_geojson_from_points {
+    my $points = shift;
 
-    GetOptions($config_cli,
-        'config=s',
+    return;
+}
+
+sub get_track_points {
+    my ($track, $sources) = @_;
+
+    print Dumper($track);
+
+    my $points;
+
+    for my $source (@$sources) {
+        print Dumper($source);
+        if ($source->{type} eq 'aprsfi') {
+
+        }
+        elsif ($source->{type} eq 'inreach') {
+            push(@$points, get_inreach_points($source, $track->{start}, $track->{end}));
+
+        }
+    }
+
+    print Dumper($points);
+
+    return $points;
+}
+
+sub get_inreach_points {
+    my ($config, $start, $end) = @_;
+
+    return if (!$config);
+
+    my $ua = LWP::UserAgent->new();
+    my $request = GET "$INREACH_API/$config->{call}?d1=$start&d2=$end";
+    $request->authorization_basic('', $config->{key});
+
+    my $response = $ua->request($request);
+
+    my $xpc = XML::LibXML::XPathContext->new(
+        XML::LibXML->load_xml(string => $response->content(), no_blanks => 1)
     );
+    $xpc->registerNs( kml => 'http://www.opengis.net/kml/2.2' );
 
-    my $config_file = {};
-    my $config_file_name = delete $config_cli->{config};
+    my $data;
+    my $id;
 
-    $config_file = LoadFile($config_file_name) if ($config_file_name);
+    for my $extendeddata ($xpc->findnodes('//*/kml:ExtendedData/kml:Data')) {
+        my $name  = lc($extendeddata->{name});
+        my $value = $extendeddata->to_literal;
+        $name =~ s/ /_/g;
 
-    return { %$config_file, %$config_cli };
+        $id = $value if ($name eq 'id');
+        $data->{$id}{$name} = $value;
+    }
+
+    print Dumper($data);
+
+    my $points;
+
+    for my $datum (values %$data) {
+        my $t = Time::Piece->strptime($datum->{time_utc}, "%m/%d/%Y %I:%M:%S %p");
+        my $point = {
+            timestamp => $t->epoch(),
+            latitude  => $datum->{latitude},
+            longitude => $datum->{longitude},
+        };
+
+        push(@$points, $point);
+    }
+
+    return @$points;
 }
 
 sub get_aprsfi_location {
@@ -96,52 +147,17 @@ sub get_aprsfi_location {
     }
 }
 
-sub get_inreach_location {
-# https://eur.inreach.garmin.com/feed/Share/raphaelthomas?d1=2018-05-01T00:00Z&d2=2018-05-31T23:59Z
-    my $config = shift;
+sub get_config {
+    my $config_cli = {};
 
-    my $d1 = '2018-05-01T00:00Z';
-    my $d2 = '2018-05-31T23:59Z';
+    GetOptions($config_cli, 'config=s');
 
-    return if (!$config);
+    my $config_file = {};
+    my $config_file_name = delete $config_cli->{config};
 
-    my $ua = LWP::UserAgent->new();
-    my $request = GET "$INREACH_API/$config->{user}?d1=$d1&d2=$d2";
-    $request->authorization_basic('', $config->{password});
+    $config_file = LoadFile($config_file_name) if ($config_file_name);
 
-    my $response = $ua->request($request);
-
-    my $xpc = XML::LibXML::XPathContext->new(
-        XML::LibXML->load_xml(string => $response->content(), no_blanks => 1)
-    );
-    $xpc->registerNs( kml => 'http://www.opengis.net/kml/2.2' );
-
-    my $data;
-    my $id;
-
-    for my $extendeddata ($xpc->findnodes('//*/kml:ExtendedData/kml:Data')) {
-        my $name  = lc($extendeddata->{name});
-        my $value = $extendeddata->to_literal;
-        $name =~ s/ /_/g;
-
-        $id = $value if ($name eq 'id');
-        $data->{$id}{$name} = $value;
-
-        print "$name\t$value\n";
-    }
-
-    print Dumper($data);
-
-    # my $t = Time::Piece->strptime($data->{time_utc}, "%m/%d/%Y %I:%M:%S %p");
-
-    # my $location = {
-    #     timestamp => $t->epoch(),
-    #     latitude  => $data->{latitude},
-    #     longitude => $data->{longitude},
-    #     source    => $data->{device_type}.' and Iridium satellite network',
-    # };
-
-    # return $location;
+    return { %$config_file, %$config_cli };
 }
 
 main();

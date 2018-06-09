@@ -24,8 +24,6 @@ const my $INREACH_API => 'https://eur.inreach.garmin.com/feed/Share';
 sub main {
     my $config = get_config();
 
-    print Dumper($config);
-
     for my $track (@{$config->{tracks}}) {
         my $points  = get_track_points($track, $config->{sources});
         next if (!$points);
@@ -33,7 +31,7 @@ sub main {
         my $geojson = get_geojson_from_points($points);
         next if (!$geojson);
 
-        for my $destination (@{$config->{output}}) {
+        for my $destination (@{$config->{output}{file}}) {
             write_file("$destination/$track->{name}.json", $geojson);
         }
     }
@@ -41,31 +39,22 @@ sub main {
     return;
 }
 
-sub get_geojson_from_points {
-    my $points = shift;
-
-    return;
-}
-
 sub get_track_points {
     my ($track, $sources) = @_;
 
-    print Dumper($track);
-
     my $points;
 
-    for my $source (@$sources) {
-        print Dumper($source);
-        if ($source->{type} eq 'aprsfi') {
+    for my $source (@{$track->{sources}}) {
+        next if (!exists $sources->{$source});
 
+        if ($sources->{$source}{type} eq 'aprsfi') {
+            # FIXME
+            # push(@$points, get_aprsfi_points($sources->{$source}, $track->{start}, $track->{end}));
         }
-        elsif ($source->{type} eq 'inreach') {
-            push(@$points, get_inreach_points($source, $track->{start}, $track->{end}));
-
+        elsif ($sources->{$source}{type} eq 'inreach') {
+            push(@$points, get_inreach_points($sources->{$source}, $track->{start}, $track->{end}));
         }
     }
-
-    print Dumper($points);
 
     return $points;
 }
@@ -94,35 +83,63 @@ sub get_inreach_points {
         my $value = $extendeddata->to_literal;
         $name =~ s/ /_/g;
 
-        $id = $value if ($name eq 'id');
-        $data->{$id}{$name} = $value;
+        if ($name eq 'id') {
+            $name = undef;
+            $id = $value;
+        }
+        elsif ($name eq 'longitude' || $name eq 'latitude') {
+            # do nothing
+        }
+        elsif ($name eq 'elevation') {
+            if ($value =~ m/^(\d+(:?\.\d+)?) m from MSL$/) {
+                $value = $1;
+            }
+            else {
+                $value = undef;
+            }
+        }
+        elsif ($name eq 'course') {
+            if ($value =~ m/^(\d+(:?\.\d+)?)/) {
+                $value = $1;
+            }
+            else {
+                $value = undef;
+            }
+        }
+        elsif ($name eq 'velocity') {
+            $name = 'speed';
+
+            if ($value =~ m/^(\d+(:?\.\d+)?) km\/h$/) {
+                $value = $1;
+            }
+            else {
+                $value = undef;
+            }
+        }
+        elsif ($name eq 'time_utc') {
+            my $t = Time::Piece->strptime($value, "%m/%d/%Y %I:%M:%S %p");
+            $name = 'timestamp';
+            $value = $t->epoch();
+        }
+        else {
+            $name = undef;
+        }
+
+        $data->{$id}{$name} = $value if ($name);
     }
 
-    print Dumper($data);
+    my @points = sort { $a->{timestamp} <=> $b->{timestamp} } values %$data;
 
-    my $points;
-
-    for my $datum (values %$data) {
-        my $t = Time::Piece->strptime($datum->{time_utc}, "%m/%d/%Y %I:%M:%S %p");
-        my $point = {
-            timestamp => $t->epoch(),
-            latitude  => $datum->{latitude},
-            longitude => $datum->{longitude},
-        };
-
-        push(@$points, $point);
-    }
-
-    return @$points;
+    return @points;
 }
 
-sub get_aprsfi_location {
-    my $config = shift;
+sub get_aprsfi_points {
+    my ($config, $start, $end) = @_;
 
     return if (!$config);
 
     my $ua = LWP::UserAgent->new();
-    my $response = $ua->get("$APRSFI_API?name=$config->{callsign}&what=loc&format=json&apikey=$config->{key}");
+    my $response = $ua->get("$APRSFI_API?name=$config->{call}&what=loc&format=json&apikey=$config->{key}");
 
     return if (!$response->is_success);
     return if ($response->header('content-type') !~ m/^application\/json/);
@@ -158,6 +175,53 @@ sub get_config {
     $config_file = LoadFile($config_file_name) if ($config_file_name);
 
     return { %$config_file, %$config_cli };
+}
+
+sub get_geojson_from_points {
+    my $points = shift;
+
+    my @features;
+    my @lineCoordinates;
+
+    my $numPoints = scalar(@$points);
+    for my $i (0 .. $numPoints-1) {
+        my $point = $points->[$i];
+        my $last = ($i == $numPoints-1);
+        my $coordinates = [
+            $point->{longitude},
+            $point->{latitude},
+            $point->{elevation}
+        ];
+
+        push(@features, {
+            type => "Feature",
+            geometry => {
+                type => "Point",
+                coordinates => $coordinates,
+            },
+            properties => {
+                timestamp => $point->{timestamp},
+                course => $point->{course},
+                speed => $point->{speed},
+                last => ($last ? 1 : 0)
+            },
+        });
+
+        push(@lineCoordinates, $coordinates);
+    }
+
+    unshift(@features, {
+        type => "Feature",
+        geometry => {
+            type => "LineString",
+            coordinates => \@lineCoordinates
+        }
+    });
+
+    return encode_json({
+        type => "FeatureCollection",
+        features => \@features,
+    });
 }
 
 main();

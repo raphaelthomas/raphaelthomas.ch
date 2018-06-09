@@ -42,6 +42,16 @@ sub get_track_points {
 
     my $points;
 
+    my $now   = time;
+    my $start = Time::Piece->strptime($track->{start}, "%Y-%m-%dT%H:%MZ");
+    my $end   = Time::Piece->strptime($track->{end}, "%Y-%m-%dT%H:%MZ");
+
+    # if track has not yet started, don't query the APIs
+    return if ($start > $now);
+    # if track has ended, don't query the APIs
+    # FIXME integrate force option
+    return if ($end < $now);
+
     for my $source (@{$track->{sources}}) {
         next if (!exists $sources->{$source});
 

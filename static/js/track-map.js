@@ -1,13 +1,15 @@
 var trackMap = L.map('trackmap').setView([0, 0], 1);
 
-var Stamen_Watercolor = L.tileLayer(
-    'https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}{r}.{ext}', {
-	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-	subdomains: 'abcd',
-	minZoom: 1,
-	maxZoom: 16,
-	ext: 'png'
-}).addTo(trackMap);
+
+var tileLayerName = $("div#trackmap").data('maptiles');
+
+if (tileLayerName) {
+    L.tileLayer.provider(tileLayerName).addTo(trackMap);
+}
+else {
+    L.tileLayer.provider('Esri.WorldStreetMap').addTo(trackMap);
+    //L.tileLayer.provider('Stamen.Watercolor').addTo(trackMap);
+}
 
 $.getJSON("/track-"+$("div#trackmap").data('map')+".json", function (track) {
     if (!track.features.length) {

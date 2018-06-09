@@ -26,13 +26,11 @@ sub main {
 
     for my $track (@{$config->{tracks}}) {
         my $points  = get_track_points($track, $config->{sources});
-        next if (!$points);
-
         my $geojson = get_geojson_from_points($points);
         next if (!$geojson);
 
         for my $destination (@{$config->{output}{file}}) {
-            write_file("$destination/$track->{name}.json", $geojson);
+            write_file("$destination/track-$track->{name}.json", $geojson);
         }
     }
 
@@ -210,13 +208,15 @@ sub get_geojson_from_points {
         push(@lineCoordinates, $coordinates);
     }
 
-    unshift(@features, {
-        type => "Feature",
-        geometry => {
-            type => "LineString",
-            coordinates => \@lineCoordinates
-        }
-    });
+    if (scalar(@lineCoordinates)) {
+        unshift(@features, {
+            type => "Feature",
+            geometry => {
+                type => "LineString",
+                coordinates => \@lineCoordinates
+            }
+        });
+    }
 
     return encode_json({
         type => "FeatureCollection",

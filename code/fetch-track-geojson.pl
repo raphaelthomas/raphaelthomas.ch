@@ -191,7 +191,7 @@ sub get_geojson_from_points {
     my @features;
     my @lineCoordinates;
 
-    my $numPoints = scalar(@$points);
+    my $numPoints = $points ? scalar(@$points) : 0;
     for my $i (0 .. $numPoints-1) {
         my $point = $points->[$i];
         my $last = ($i == $numPoints-1);

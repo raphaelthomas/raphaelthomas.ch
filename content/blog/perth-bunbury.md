@@ -2,7 +2,7 @@
 title = "Day 1: Perth - Dwellingup - Harvey - Bunbury"
 date = "2018-06-16T00:00:00+10:00"
 draft = true
-map = "2018-south-western-australia"
+map = "2018-swa-day-1"
 +++
 
 early rise, car pick up, bit of a pain, drop in at crossfit frantic

@@ -2,7 +2,7 @@
 title = "Day 2: Wellington Dam - Collie - Balingup - Busselton"
 date = "2018-06-17T00:00:00+10:00"
 draft = true
-map = "2018-south-western-australia"
+map = "2018-swa-day-2"
 +++
 
 slept 9hours straight. pizza for breakfast, then shower and pack up for a daytrip. drive to the harbour, bit of a maze and finally made it to eagle? point / the cut.

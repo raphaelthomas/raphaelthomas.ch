@@ -50,7 +50,7 @@ sub get_track_points {
     return if ($start > $now);
     # if track has ended, don't query the APIs
     # FIXME integrate force option
-    return if ($end < $now);
+    # return if ($end < $now);
 
     for my $source (@{$track->{sources}}) {
         next if (!exists $sources->{$source});

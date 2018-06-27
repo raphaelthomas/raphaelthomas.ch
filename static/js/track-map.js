@@ -34,8 +34,8 @@ $.getJSON("/track-"+$("div#trackmap").data('map')+".json", function (track) {
         style: {
             fillColor: "#000000",
             color: "#000000",
-            opacity: 0.5,
-            fillOpacity: 0.5
+            opacity: 0.75,
+            fillOpacity: 0.75
         },
         pointToLayer: function (feature, latlng) {
             if (feature.properties.last) {

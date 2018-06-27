@@ -18,7 +18,7 @@ $.getJSON("/track-"+$("div#trackmap").data('map')+".json", function (track) {
 
     var size = 40;
     var markerStyle = {
-        radius: 3,
+        radius: 1,
         fillColor: "#000000",
         color: "#000000",
         opacity: 1,
@@ -44,7 +44,8 @@ $.getJSON("/track-"+$("div#trackmap").data('map')+".json", function (track) {
                 });
             }
             else {
-                return L.circleMarker(latlng, markerStyle);
+                return;
+                // return L.circleMarker(latlng, markerStyle);
             }
         }
     });

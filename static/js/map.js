@@ -14,7 +14,7 @@
         borders:  { stroke: 'rgba(220,220,220,1)' }
     }));
     globe.loadPlugin(planetaryjs.plugins.pings());
-    globe.loadPlugin(rotatelonlat(40));
+    globe.loadPlugin(rotatelonlat(20));
 
     var lonStart = Math.floor(Math.random() * 360) - 180;
     var latStart = Math.floor(Math.random() * 180) - 90;

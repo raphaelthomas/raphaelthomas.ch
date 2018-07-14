@@ -188,8 +188,9 @@ sub reverse_geocode {
     elsif ($address->{suburb}) {
         $loc_text .= "$address->{suburb}";
     }
-    elsif ($address->{city}) {
-        $loc_text .= "$address->{city}";
+
+    if ($address->{city}) {
+        $loc_text .= ", $address->{city}";
     }
 
     if ($address->{country}) {
